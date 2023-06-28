@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerce_WebApp.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/products")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -36,7 +36,7 @@ namespace E_Commerce_WebApp.Server.Controllers
         };
 
         [HttpGet]
-        public async Task<IActionResult> GetProducts()
+        public async Task<ActionResult<List<Product>>> GetProducts()
         {
             return Ok(Products);
         }
