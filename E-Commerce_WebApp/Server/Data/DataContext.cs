@@ -9,6 +9,7 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Category>().HasIndex(c => c.Url).IsUnique();
             modelBuilder.Entity<Category>().HasData(
                 new Category
                 {
@@ -28,7 +29,8 @@
                     Name = "Video Games",
                     Url = "video-games",
                 }
-            );
+            )
+            ;
             modelBuilder.Entity<Product>().HasData(
                 new Product
                 {
