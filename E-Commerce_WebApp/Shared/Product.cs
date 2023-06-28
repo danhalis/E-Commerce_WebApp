@@ -17,5 +17,8 @@ namespace E_Commerce_WebApp.Shared
 
         [Column(TypeName = "decimal(18,2)")] // -> Store 18 digits + 2 decimal places
         public decimal Price { get; set; }
+
+        public Category? Category { get; set; }
+        public int CategoryId { get; set; }
     }
 }
