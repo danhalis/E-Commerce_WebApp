@@ -1,10 +1,16 @@
+global using Microsoft.EntityFrameworkCore;
 global using E_Commerce_WebApp.Shared;
 using Microsoft.AspNetCore.ResponseCompression;
+using E_Commerce_WebApp.Server.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
