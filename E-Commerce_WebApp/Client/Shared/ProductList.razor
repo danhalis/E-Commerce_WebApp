@@ -1,33 +1,38 @@
-﻿@inject HttpClient Http
+﻿@inject IProductService ProductService
 
-<MudPaper>
-    <MudList Clickable="true">
-        @foreach (var product in Products)
-        {
-            <MudListItem>
-                <MudCard Class="tw-flex tw-flex-col tw-items-center tw-justify-center md:tw-flex-row">
-                    <MudImage Class="tw-max-w-[200px] !tw-object-contain tw-ease-in-out hover:tw-scale-105"
-                              Src="@product.ImageUrl" Alt="@product.Title" />
-                    <MudCardContent Class="tw-self-start tw-space-y-5">
-                        <a href="#">
-                            <MudText Typo="Typo.h5">@product.Title</MudText>
-                        </a>
-                        <MudText Typo="Typo.body2">@product.Description</MudText>
-                        <MudText Class="tw-text-xl tw-text-green-500" Typo="Typo.body1">$@product.Price</MudText>
-                    </MudCardContent>
-                </MudCard>
-            </MudListItem>
-        }
-    </MudList>
-</MudPaper>
+@if (ProductService == null || ProductService.Products.Count == 0)
+{
+    <span>Loading products ...</span>
+}
+else
+{
+    <MudPaper>
+        <MudList Clickable="true">
+            @foreach (var product in ProductService.Products)
+            {
+                <MudListItem>
+                    <MudCard Class="tw-flex tw-flex-col tw-items-center tw-justify-center md:tw-flex-row">
+                        <MudImage Class="tw-max-w-[200px] !tw-object-contain tw-ease-in-out hover:tw-scale-105"
+                                  Src="@product.ImageUrl" Alt="@product.Title" />
+                        <MudCardContent Class="tw-self-start tw-space-y-5">
+                            <a href="#">
+                                <MudText Typo="Typo.h5">@product.Title</MudText>
+                            </a>
+                            <MudText Typo="Typo.body2">@product.Description</MudText>
+                            <MudText Class="tw-text-xl tw-text-green-500" Typo="Typo.body1">$@product.Price</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudListItem>
+            }
+        </MudList>
+    </MudPaper>
+}
 
 @code {
     private static List<Product> Products = new List<Product>();
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await Http.GetFromJsonAsync<List<Product>>("api/products");
-        if (result != null)
-            Products = result;
+        await ProductService.GetProducts();
     }
 }
